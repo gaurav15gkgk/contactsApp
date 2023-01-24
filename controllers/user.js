@@ -1,3 +1,4 @@
+//importing user services
 import {
     signinUserService,
     signupUserService,
@@ -5,6 +6,7 @@ import {
     getUsersService
 } from '../services/user.js'
 
+//controller for user signup
 export const signupController = async(req, res) => {
     try {
         const {name, userName, password} = req.body
@@ -23,6 +25,7 @@ export const signupController = async(req, res) => {
     }
 }
 
+//controller for user signin
 export const signinController = async (req, res) => {
     try {
         const {userName, password} = req.body
@@ -39,6 +42,7 @@ export const signinController = async (req, res) => {
     }
 }
 
+//controller for fetching the users
 export const getUsersController = async (req, res) => {
     try {
         const users = await getUsersService()
@@ -54,6 +58,7 @@ export const getUsersController = async (req, res) => {
     }
 }
 
+// controller for fetching the single user
 export const getUserController = async (req, res) => {
     try {
         const {userId} = req.query

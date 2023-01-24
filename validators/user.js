@@ -1,8 +1,10 @@
+//importing util file for validation
 import {
     parameterValidators,
     makeInvalidParametersString
 } from '../utils/parameterValidators.js'
 
+//importing specific regex
 import {
     onlyCharRegex,
     userNameRegex,
@@ -10,6 +12,7 @@ import {
     mongoObjectIdRegex
 } from '../utils/commonRegex.js'
 
+//validator for signup
 export const signUpValidator  = (req, res, next) => {
 
     const validParameters = [
@@ -46,7 +49,7 @@ export const signUpValidator  = (req, res, next) => {
     next()
 }
 
-
+//validator for signin
 export const signInValidator  = (req, res, next) => {
 
     const validParameters = [
@@ -77,6 +80,7 @@ export const signInValidator  = (req, res, next) => {
     next()
 }
 
+//validator for getting single user
 export const getUserValidator = (req, res, next) => {
     const validParameters = [
         {

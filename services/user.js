@@ -1,7 +1,9 @@
+//importing libraries
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
+// importing user repository
 import {
     getUser,
     getUsers,
@@ -14,12 +16,16 @@ dotenv.config()
 const saltRound = parseInt(`${process.env.BCRYPT_SALT_ROUNDS}`)
 const jwtSecret = process.env.JWT_SECRET
 
+//service to signup the user
 export const signupUserService = (name, userName, password) => {
     return new Promise(async (resolve, reject) => {
+
+        //checking if user exists or not
         const userPresent = await checkIfUserExist(userName);
-        console.log(userPresent)
+        
+        // if present cant signup will throw error
         if(userPresent.data !== null){
-            console.log("User exists already")
+          
            return  reject({
                 code : userPresent.code,
                 data : null,
@@ -27,8 +33,11 @@ export const signupUserService = (name, userName, password) => {
             })
         }
       
+        // if not present signup the user
         try {
+            //hashing the password
             const hashedPassword = bcrypt.hashSync(password, saltRound)
+        
             const newUser = await addUser(name, userName, hashedPassword)
             return resolve(newUser)
         } catch (error) {
@@ -42,8 +51,10 @@ export const signupUserService = (name, userName, password) => {
     })
 }
 
+//service to signIn the user
 export const signinUserService = (userName, password) => {
     return new Promise(async (resolve, reject) => {
+        //checking if the user exists or not
         const userPresent = await checkIfUserExist(userName);
 
         if(!userPresent.data) {
@@ -55,6 +66,7 @@ export const signinUserService = (userName, password) => {
             })
         }
 
+        // if exists then checking the password
         try {
             const hashedPassword = userPresent.data.password
             const isUserSame = bcrypt.compareSync(password, hashedPassword)
@@ -64,9 +76,11 @@ export const signinUserService = (userName, password) => {
                 msg : `Password is not correct`
             })
 
-            const {_id, name, userName} = userPresent
+            //if password is correct then generating the token
+            const {_id, name, userName} = userPresent.data
+            console.log('userpresent', userPresent)
             const token = jwt.sign(
-                {data :{_id, name, userName}}, 
+                {_id : _id,name : name, userName: userName }, 
                 jwtSecret, 
                 {algorithm: "HS256", expiresIn: '1h'}
             )
@@ -91,6 +105,7 @@ export const signinUserService = (userName, password) => {
     })
 }
 
+//service to fetch the users 
 export const getUsersService = () => {
     return new Promise(async (resolve,reject) => {
         try {
@@ -107,6 +122,7 @@ export const getUsersService = () => {
     })
 }
 
+//service to fetch a signle user
 export const getUserService = (userId) => {
     return new Promise(async(resolve, reject) => {
         try {

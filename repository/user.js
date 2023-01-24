@@ -1,5 +1,7 @@
+//importing the user model
 import UserModel from '../models/user.js'
 
+//repository to fetch the user
 export const getUsers = async () => {
     try {
         const usersFound = await UserModel.find().select('_id name userName')
@@ -19,7 +21,7 @@ export const getUsers = async () => {
     }
 }
 
-
+//repostitory to fetch the single user
 export const getUser = async(userId) => {
     try {
         const userFound = await UserModel.findById(userId).select('_id name userName')
@@ -39,6 +41,7 @@ export const getUser = async(userId) => {
     }
 }
 
+//repository to save the new user
 export const addUser = async(name, userName, password) => {
     try {
         const newUser = UserModel({
@@ -64,6 +67,7 @@ export const addUser = async(name, userName, password) => {
     }
 }
 
+//repository to check if user exists or not
 export const checkIfUserExist = async(userName) => {
     try {
         const userFound = await UserModel.findOne({userName: userName})

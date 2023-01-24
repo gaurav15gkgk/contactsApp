@@ -1,3 +1,4 @@
+//function to validate the different input parameters
 export const parameterValidators = (validParameters , body) => {
     if(validParameters == undefined || body  == undefined){
         console.log("validParameters and body are required")
@@ -44,6 +45,7 @@ export const parameterValidators = (validParameters , body) => {
     return inValidParameters
 }
 
+//function to make string from invalid parameters
 export const makeInvalidParametersString = inValidParameters => {
     if(inValidParameters.length == 0){
         return ''

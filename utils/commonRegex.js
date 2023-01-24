@@ -7,3 +7,5 @@ export const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,
 export const onlyCharRegex = /^([a-zA-Z]+\s)*[a-zA-Z]+$/
 
 export const mongoObjectIdRegex = /^[a-f\d]{24}$/i
+
+export const onlyNumberRegex = /^[0-9]+$/
